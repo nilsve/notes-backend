@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "deploy": "serverless deploy --aws-profile private"
+  },
+  "devDependencies": {
+    "serverless": "^1.74.1",
+    "serverless-rust": "github:rust-serverless/serverless-rust#master"
+  }
+}
