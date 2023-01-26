@@ -1,4 +1,6 @@
-pub mod customer_data;
+pub mod customer;
+mod helpers;
+mod test;
 
 use aws_sdk_dynamodb::model::AttributeValue;
 use std::borrow::Cow;

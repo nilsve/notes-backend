@@ -11,6 +11,7 @@
       <sourceFolder url="file://$MODULE_DIR$/functions/add_customer/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/functions/list_customers/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
+      <excludeFolder url="file://$MODULE_DIR$/.serverless" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

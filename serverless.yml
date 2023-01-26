@@ -28,7 +28,9 @@ provider:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.dataTable}"
+      Resource:
+        - arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.dataTable}*
+        - arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.dataTable}
 
 custom:
   rust:
@@ -58,7 +60,7 @@ functions:
     handler: list_customers
     events:
       - httpApi:
-          path: '/list_customers'
+          path: '/list-customers'
           method: GET
     environment:
       DATA_TABLE_NAME: ${self:custom.dataTable}
@@ -75,11 +77,32 @@ resources:
             AttributeType: S
           - AttributeName: sk
             AttributeType: S
+          - AttributeName: gsi1_pk
+            AttributeType: S
+          - AttributeName: gsi1_sk
+            AttributeType: S
         KeySchema:
           - AttributeName: pk
             KeyType: HASH
           - AttributeName: sk
             KeyType: RANGE
+        GlobalSecondaryIndexes:
+          - IndexName: GSI_INVERSE
+            KeySchema:
+              - AttributeName: sk
+                KeyType: HASH
+              - AttributeName: pk
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+          - IndexName: GSI_1
+            KeySchema:
+              - AttributeName: gsi1_pk
+                KeyType: HASH
+              - AttributeName: gsi1_sk
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events

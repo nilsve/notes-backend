@@ -1,6 +1,8 @@
 {
+  "name": "crm-backend",
   "scripts": {
-    "deploy": "serverless deploy --aws-profile private"
+    "deploy": "serverless deploy --aws-profile private",
+    "remove": "serverless remove"
   },
   "devDependencies": {
     "serverless": "^1.74.1",
