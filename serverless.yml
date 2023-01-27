@@ -47,21 +47,22 @@ plugins:
   - serverless-rust
 
 functions:
-  add_customer:
+  graphql:
     memorySize: 128
-    handler: add_customer
+    handler: graphql
     events:
       - httpApi:
-          path: '/add-customer'
+          path: '/graphql'
           method: GET
-  list_customers:
-    memorySize: 128
-    handler: list_customers
-    events:
       - httpApi:
-          path: '/list-customers'
-          method: GET
-
+          path: '/graphql'
+          method: POST
+      - httpApi:
+          path: '/graphql'
+          method: PUT
+      - httpApi:
+          path: '/graphql'
+          method: DELETE
 resources:
   Resources:
     customerData:

@@ -6,13 +6,13 @@ pub mod add_item;
 pub mod list_items;
 
 pub enum Table {
-    CustomerData,
+    Customer,
 }
 
 impl Table {
     fn get_name(&self) -> String {
         let table_name = match &self {
-            Table::CustomerData => "CUSTOMER_DATA_TABLE_NAME",
+            Table::Customer => "CUSTOMER_DATA_TABLE_NAME",
         };
 
         if let Ok(name) = env::var(table_name) {

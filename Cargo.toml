@@ -2,8 +2,7 @@
 
 members = [
     "shared",
-    "functions/customers/add_customer",
-    "functions/customers/list_customers",
+    "graphql",
 ]
 
 [workspace.dependencies]
@@ -23,3 +22,6 @@ anyhow = "1.0.66"
 uuid = { version = "1.2.2", features = ["v4", "serde"] }
 chrono = { version = "0.4.23", features = ["serde"] }
 tokio = { version = "1.21.2", features = ["macros"] }
+
+juniper = "^0.15"
+
