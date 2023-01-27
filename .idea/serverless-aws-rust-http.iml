@@ -6,10 +6,10 @@
       <sourceFolder url="file://$MODULE_DIR$/bla/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/hello_world" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/functions/hello/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/functions/list_notes/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/shared/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/functions/add_customer/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/functions/list_customers/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/functions/customers/add_customer/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/functions/customers/list_customers/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/functions/customers/notes/list_notes/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
       <excludeFolder url="file://$MODULE_DIR$/.serverless" />
     </content>

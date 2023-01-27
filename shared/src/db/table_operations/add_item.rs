@@ -1,32 +1,21 @@
-use crate::db::entities::TableEntity;
-use crate::db::table_operations::{COLUMN_PARTITION_KEY, COLUMN_SORT_KEY, ENVIRONMENT_TABLE_NAME};
-use aws_sdk_dynamodb::error::PutItemError;
-use aws_sdk_dynamodb::types::SdkError;
+use crate::db::table_operations::Table;
 use aws_sdk_dynamodb::Client;
-use std::env;
-use std::ops::Deref;
+use serde::Serialize;
+use serde_dynamo::to_item;
+use std::collections::HashMap;
 
-pub async fn add_item<E: Into<TableEntity>>(
-    client: &Client,
-    item: E,
-) -> Result<(), SdkError<PutItemError>> {
-    let serialized: TableEntity = item.into();
+use anyhow::Result;
+use aws_sdk_dynamodb::model::AttributeValue;
 
-    debug_assert_eq!(serialized.contains_key(COLUMN_PARTITION_KEY), true);
-    debug_assert_eq!(serialized.contains_key(COLUMN_SORT_KEY), true);
+pub async fn add_item<E: Serialize>(client: &Client, item: E) -> Result<()> {
+    let serialized: HashMap<String, AttributeValue> = to_item(item)?;
 
-    let mut put_item = client
+    client
         .put_item()
-        .table_name(env::var(ENVIRONMENT_TABLE_NAME).expect("Data table name not found in env"));
-
-    put_item = serialized
-        .deref()
-        .iter()
-        .fold(put_item, |put_item, (key, value)| {
-            put_item.item(key.deref(), value.clone())
-        });
-
-    put_item.send().await?;
+        .table_name(Table::CustomerData.get_name())
+        .set_item(Some(serialized))
+        .send()
+        .await?;
 
     Ok(())
 }

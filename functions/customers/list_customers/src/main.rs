@@ -1,6 +1,6 @@
+use aws_sdk_dynamodb::Client;
 use lambda_http::{run, service_fn, Body, Request, Response};
 
-use aws_sdk_dynamodb::Client;
 use shared::db::entities::customer::customer_data::get_customer_datas;
 
 async fn list_customers(_event: Request) -> anyhow::Result<Response<Body>> {

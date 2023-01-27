@@ -17,7 +17,7 @@ provider:
   runtime: rust
 
   environment:
-    DATA_TABLE_NAME: ${self:custom.dataTable}
+    CUSTOMER_DATA_TABLE_NAME: ${self:custom.customerDataTable}
 
   iamRoleStatements:
     - Effect: "Allow"
@@ -29,15 +29,16 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
       Resource:
-        - arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.dataTable}*
-        - arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.dataTable}
+        - arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/*
+        - arn:aws:dynamodb:${opt:region, self:provider.region}:*:table
 
 custom:
   rust:
-    dockerTag: 'latest'
-    dockerImage: 'rustserverless/lambda-rust'
+    dockerless: true
+#    dockerTag: 'latest'
+#    dockerImage: 'rustserverless/lambda-rust'
 
-  dataTable: ${self:service}-${opt:stage, self:provider.stage}-data
+  customerDataTable: ${self:service}-${opt:stage, self:provider.stage}-customer-data
 
 package:
   individually: true
@@ -53,8 +54,6 @@ functions:
       - httpApi:
           path: '/add-customer'
           method: GET
-    environment:
-      DATA_TABLE_NAME: ${self:custom.dataTable}
   list_customers:
     memorySize: 128
     handler: list_customers
@@ -62,47 +61,41 @@ functions:
       - httpApi:
           path: '/list-customers'
           method: GET
-    environment:
-      DATA_TABLE_NAME: ${self:custom.dataTable}
 
 resources:
   Resources:
-    dataTable:
+    customerData:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: ${self:custom.dataTable}
+        TableName: ${self:custom.customerDataTable}
         BillingMode: PAY_PER_REQUEST
         AttributeDefinitions:
-          - AttributeName: pk
+          - AttributeName: customer_id
             AttributeType: S
-          - AttributeName: sk
-            AttributeType: S
-          - AttributeName: gsi1_pk
-            AttributeType: S
-          - AttributeName: gsi1_sk
+          - AttributeName: name
             AttributeType: S
         KeySchema:
-          - AttributeName: pk
+          - AttributeName: customer_id
             KeyType: HASH
-          - AttributeName: sk
+          - AttributeName: name
             KeyType: RANGE
-        GlobalSecondaryIndexes:
-          - IndexName: GSI_INVERSE
-            KeySchema:
-              - AttributeName: sk
-                KeyType: HASH
-              - AttributeName: pk
-                KeyType: RANGE
-            Projection:
-              ProjectionType: ALL
-          - IndexName: GSI_1
-            KeySchema:
-              - AttributeName: gsi1_pk
-                KeyType: HASH
-              - AttributeName: gsi1_sk
-                KeyType: RANGE
-            Projection:
-              ProjectionType: ALL
+#        GlobalSecondaryIndexes:
+#          - IndexName: GSI_INVERSE
+#            KeySchema:
+#              - AttributeName: sk
+#                KeyType: HASH
+#              - AttributeName: pk
+#                KeyType: RANGE
+#            Projection:
+#              ProjectionType: ALL
+#          - IndexName: GSI_1
+#            KeySchema:
+#              - AttributeName: gsi1_pk
+#                KeyType: HASH
+#              - AttributeName: gsi1_sk
+#                KeyType: RANGE
+#            Projection:
+#              ProjectionType: ALL
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
