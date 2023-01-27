@@ -57,7 +57,7 @@ impl Query {
     // To gain access to the context, we specify a argument
     // that is a reference to the Context type.
     // Juniper automatically injects the correct context here.
-    async fn customer(context: &Context, new_customer: NewCustomer) -> FieldResult<Customer> {
+    async fn customer(_context: &Context, _new_customer: NewCustomer) -> FieldResult<Customer> {
         unimplemented!()
     }
 
@@ -66,7 +66,7 @@ impl Query {
 
         Ok(customers
             .into_iter()
-            .map(|customer_entity| Customer::from(customer_entity))
+            .map(Customer::from)
             .collect())
     }
 }

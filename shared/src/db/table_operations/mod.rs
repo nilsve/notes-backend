@@ -16,7 +16,7 @@ impl Table {
         };
 
         if let Ok(name) = env::var(table_name) {
-            return name;
+            name
         } else {
             for x in env::vars() {
                 println!("var {}, {}", x.0, x.1);

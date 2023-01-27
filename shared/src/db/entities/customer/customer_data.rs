@@ -28,10 +28,8 @@ impl CustomerEntity {
     }
 }
 
-const SK_PREFIX: &'static str = "ud";
-
 pub async fn get_customer_entities(client: &Client) -> anyhow::Result<Vec<CustomerEntity>> {
-    let query = build_scan(&client, Table::Customer);
+    let query = build_scan(client, Table::Customer);
 
     // .index_name(GSI_INVERSE_NAME)
     // .key_condition_expression("#sk = :sv")

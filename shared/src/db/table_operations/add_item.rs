@@ -13,7 +13,7 @@ pub async fn add_item<E: TableEntity + Serialize>(
     table: Table,
     item: &E,
 ) -> Result<()> {
-    let serialized: HashMap<String, AttributeValue> = to_item(&item)?;
+    let serialized: HashMap<String, AttributeValue> = to_item(item)?;
 
     client
         .put_item()
