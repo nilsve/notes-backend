@@ -11,6 +11,7 @@
       <sourceFolder url="file://$MODULE_DIR$/functions/customers/list_customers/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/functions/customers/notes/list_notes/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/graphql/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
       <excludeFolder url="file://$MODULE_DIR$/.serverless" />
     </content>
